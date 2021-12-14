@@ -5,6 +5,8 @@
 #include <stack>
 #include <sstream>
 #include <any>
+#include "Validations.h"
+
 
 using namespace std;
 
@@ -60,7 +62,18 @@ switch (1) {
     }
 */
 
+/*inline int sum(int a, int b)
+{
+    return a + b;
+}*/
+
 int main() {
     
+
+    
+
+    Validations val;
+    
+
   
 }
