@@ -8,7 +8,7 @@ Validations::Validations() {
 
 }
 
-//Funcion para revisar el operador final
+//Funcion para revisar si se ingresó un operador al final de expresión
 bool Validations::checkFinalOperator(string expre)noexcept(false) //--> C++17
 {
 	
@@ -38,10 +38,12 @@ bool Validations::checkFinalOperator(string expre)noexcept(false) //--> C++17
 bool Validations::checkOperatorRules(string expre)noexcept(false) {//--> C++17
 
 	for (int x = 0; x < expre.length(); x++) {
+		//Que no ingrese operadores al inicio
 		if (expre.at(0) == '+' || expre.at(0) == '-' || expre.at(0) == '*' || expre.at(0) == '/' || expre.at(0) == '%' || expre.at(0) == '^' || expre.at(0) == ')') {
 			return false;
 		}
 
+		//Que no ingrese operadores juntos
 		if (expre.at(x) == '+' || expre.at(x) == '-' || expre.at(x) == '*' || expre.at(x) == '/' || expre.at(x) == '^' || expre.at(x) == '%' || expre.at(x) == '(')
 		{
 			if (expre.at(x+1) == '+' || expre.at(x+1) == '-' || expre.at(x+1) == '*' || expre.at(x+1) == '/' || expre.at(x+1) == '^' || expre.at(x+1) == '%' || expre.at(x+1) == ')')
@@ -50,8 +52,7 @@ bool Validations::checkOperatorRules(string expre)noexcept(false) {//--> C++17
 			}
 		}
 
-		//revisar numeros negativos
-		//esta agregarle que si despues de ( es -
+		//Revisar que no haya operador de primero al inicio de paréntesis
 		if (expre.at(x) == '+' || expre.at(x) == '-' || expre.at(x) == '*' || expre.at(x) == '/' || expre.at(x) == '^' || expre.at(x) == '%')
 		{
 			if (expre.at(x-1) == '(')
@@ -64,6 +65,7 @@ bool Validations::checkOperatorRules(string expre)noexcept(false) {//--> C++17
 	}
 }
 
+//Revisar si cerró paréntesis
 bool Validations::checkParenthesis(string expre)noexcept(false) {//--> C++17
 	int leftPar = 0, rightPar = 0;
 
@@ -91,26 +93,14 @@ bool Validations::checkCharacters(string expre)noexcept(false) {//--> C++17
 	
 	for (int x = 0; x < expre.length(); x++)
 	{
-		if (expre.at(x) != 'p' && expre.at(x) != 'i' && expre.at(x) != 'e' && isalpha(expre.at(x)))
+	
+		//Que no ingrese dos caracteres seguidos
+		if (isalpha(expre.at(x)) && isalpha(expre.at(x+1)) && expre.at(x)!='p' && expre.at(x+1) != 'i')
 		{
+			cout << "¡No ingrese dos caracteres seguidos!" << endl;
 			return false;
 		}
-		if (expre.at(0) == 'i')
-		{
-			return false;
-		}
-		if (x != 0 && expre.at(x) == 'i' && expre.at(x - 1) != 'p')
-		{
-			return false;
-		}
-		if (x != expre.length() - 1 && (expre.at(x) == 'p' && expre.at(x + 1) != 'i'))
-		{
-			return false;
-		}
-		if (expre.at(expre.length() - 1) == 'p')
-		{
-			return false;
-		}
+		
 	}
 	return true;
 	

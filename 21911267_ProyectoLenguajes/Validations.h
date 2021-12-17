@@ -17,8 +17,6 @@ public:
 	bool checkParenthesis(string);
 	bool checkCharacters(string);
 	bool checkDecimal(string);
-	bool checkPi(string);
-	bool checkEuler(string);
 	bool checkInvalidDeno(string);
 	string removeSpaces(string);
 

@@ -69,10 +69,13 @@ switch (1) {
 
 int main() {
     
-
-    
-
     Validations val;
+    auto expression = ""s; //-->C++
+    cout << "Ingrese expresión en notación infija:";
+    getline(cin, expression);
+    if (val.checkCharacters(expression)) {
+        cout << "Expresion aceptada";
+    }
     
 
   
