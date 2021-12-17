@@ -6,7 +6,7 @@
 #include <sstream>
 #include <any>
 #include "Validations.h"
-
+#include <locale.h>
 
 using namespace std;
 
@@ -71,11 +71,18 @@ int main() {
     
     Validations val;
     auto expression = ""s; //-->C++
-    cout << "Ingrese expresión en notación infija:";
-    getline(cin, expression);
-    if (val.checkCharacters(expression)) {
-        cout << "Expresion aceptada";
-    }
+    setlocale(LC_ALL, "spanish");
+   
+    do {
+        cout <<endl<< "Ingrese expresión en notación infija:";
+        getline(cin, expression);
+        if (val.checkInvalidDeno(expression)) {
+            cout << "Expresion aceptada";
+        }
+        else {
+            cout << "Denominador Inválido" << endl;
+        }
+    } while (expression != "exit");
     
 
   
