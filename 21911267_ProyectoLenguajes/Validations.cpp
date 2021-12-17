@@ -8,6 +8,7 @@ Validations::Validations() {
 
 }
 
+//Funcion para revisar el operador final
 bool Validations::checkFinalOperator(string expre)noexcept(false) //--> C++17
 {
 	
