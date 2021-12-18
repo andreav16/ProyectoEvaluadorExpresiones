@@ -19,6 +19,7 @@ public:
 	bool checkDecimal(string);
 	bool checkNumChar(string);
 	bool checkInvalidDeno(string);
+	string finalExpression(string);
 	string removeSpaces(string);
 
 
