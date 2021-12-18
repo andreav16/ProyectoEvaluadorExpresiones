@@ -51,6 +51,7 @@ bool Validations::checkOperatorRules(string expre)noexcept(false) {//--> C++17
 	for (int x = 0; x < expre.length(); x++) {
 		//Que no ingrese operadores al inicio
 		if (expre.at(0) == '+' || expre.at(0) == '-' || expre.at(0) == '*' || expre.at(0) == '/' || expre.at(0) == '%' || expre.at(0) == '^' || expre.at(0) == ')') {
+			cout << "¡ERROR! No ingrese operadores al inicio de expresión" << endl;
 			return false;
 		}
 
@@ -59,21 +60,13 @@ bool Validations::checkOperatorRules(string expre)noexcept(false) {//--> C++17
 		{
 			if (expre.at(x + 1) == '+' || expre.at(x + 1) == '-' || expre.at(x + 1) == '*' || expre.at(x + 1) == '/' || expre.at(x + 1) == '^' || expre.at(x + 1) == '%' || expre.at(x + 1) == ')')
 			{
+				cout << "¡ERROR! No ingrese dos ó más operadores de manera seguida" << endl;
 				return false;
 			}
 		}
-
-		//Revisar que no haya operador de primero al inicio de paréntesis
-		if (expre.at(x) == '+' || expre.at(x) == '-' || expre.at(x) == '*' || expre.at(x) == '/' || expre.at(x) == '^' || expre.at(x) == '%')
-		{
-			if (expre.at(x - 1) == '(')
-			{
-				return false;
-			}
-		}
-		return true;
 
 	}
+	return true;
 }
 
 //Revisar si cerró paréntesis
@@ -192,13 +185,11 @@ string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 	txtfile.open("constantes.txt");
 	auto constants = ""s;//-->texto con las constantes y sus valores
 	auto s = ""s;//-->String temporal para ir concatenando las constantes del texto
-	auto finalExpre = ""s;
-	auto num = ""s;
-	int r = 0;
-	string ing = "";
-	bool ya = true;
-	vector<string> variables;
-	vector<string> varsExpresion;
+	auto finalExpre = ""s;//-->Aquí se almacena ya la expresión sin variables sino con números
+	auto num = ""s;//-> para concatenar mientras hago validación de txt
+	int r = 0;//-->contador
+	string ing = "";//-->Para que usuario ingrese valor de variable, es temp
+	bool ya = true;//-->para verificar si variable ya está en archivo
 	if (!txtfile) {
 		cout << "¡Error en abrir archivo!" << endl;
 		return nullptr;//-->C++11
@@ -261,7 +252,6 @@ string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 
 
 	}
-
 	txtfile.close();
 	return finalExpre;
 }
