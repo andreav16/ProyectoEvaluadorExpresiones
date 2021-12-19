@@ -3,9 +3,7 @@
 #include <string>
 #include <string.h>
 #include <any>
-#include <stack>
 #include <fstream>
-#include <vector>
 #include <algorithm>
 
 
@@ -64,6 +62,7 @@ bool Validations::checkOperatorRules(string expre)noexcept(false) {//--> C++17
 				return false;
 			}
 		}
+
 
 	}
 	return true;
@@ -211,7 +210,7 @@ string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 							goto a;
 						}
 					}
-				a:	finalExpre += num;//variables.push_back(num);
+				a:	finalExpre += num;
 					r = 0;
 					num = "";
 					ya = false;
@@ -226,7 +225,7 @@ string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 					cout << "Solo puede ingresar dígitos" << endl;
 					goto b;
 				}
-				finalExpre += ing;//variables.push_back(ing);
+				finalExpre += ing;
 			}
 			ya = true;
 

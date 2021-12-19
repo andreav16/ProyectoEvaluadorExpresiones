@@ -6,6 +6,7 @@
 #include <sstream>
 #include <any>
 #include "Validations.h"
+#include "Evaluator.h"
 #include <locale.h>
 
 using namespace std;
@@ -13,6 +14,7 @@ using namespace std;
 int main() {
 
 	Validations val;
+	Evaluator evaluador;
 	auto expression = ""s; //-->C++14
 	setlocale(LC_ALL, "spanish");
 
@@ -51,7 +53,7 @@ int main() {
 			goto a;
 		}
 		expression = val.finalExpression(expression);
-		cout << expression;
+		cout <<evaluador.convertToPostfix(expression);
 
 	} while (expression != "exit");
 
