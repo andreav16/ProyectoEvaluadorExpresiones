@@ -182,6 +182,7 @@ inline bool isNumber(const string& s)//-->C++17
 string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 	ifstream txtfile;
 	txtfile.open("constantes.txt");
+	//-->C++11 --v
 	auto constants = ""s;//-->texto con las constantes y sus valores
 	auto s = ""s;//-->String temporal para ir concatenando las constantes del texto
 	auto finalExpre = ""s;//-->Aquí se almacena ya la expresión sin variables sino con números
@@ -199,7 +200,7 @@ string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 	}
 
 	for (int x = 0; x < expre.length(); x++) {
-		if (isalpha(expre.at(x)) && expre.at(x) != 'p' && expre.at(x) != 'i') {
+		if (isalpha(expre.at(x)) && expre.at(x) != 'p') {
 			for (int y = 0; y < constants.length(); y++) {
 				if (constants.at(y) == expre.at(x)) {
 					r = y + 2;
@@ -228,8 +229,6 @@ string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 				finalExpre += ing;
 			}
 			ya = true;
-
-
 		}
 		else if (expre.at(x) == 'p') {
 			for (int i = 0; i < constants.length(); i++) {
@@ -242,6 +241,7 @@ string Validations::finalExpression(string expre)noexcept(nullptr) {//-->C++17
 					finalExpre += num;
 					r = 0;
 					num = "";
+					x++;
 				}
 			}
 		}
