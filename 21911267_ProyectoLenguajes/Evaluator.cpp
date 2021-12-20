@@ -4,26 +4,26 @@
 #include <string.h>
 #include <vector>
 #include <stack>
+#include <iomanip>
+#include <sstream>
+
+using namespace std;
 
 Evaluator::Evaluator() {
-
 }
 
-constexpr auto sum(auto x, auto y) {//-->C++14
-	return x + y;
-}
-constexpr auto sub(auto x, auto y) {//-->C++14
-	return x - y;
-}
+constexpr auto sum(auto x, auto y) { return x + y; } //-->C++14
+constexpr auto sub(auto x, auto y) { return x - y; } //-->C++14
 auto mult = [](auto x, auto y) { return x * y; };//--->C++14
-auto mod = [](auto x, auto y) { return x % y; };//--->C++14
+auto divi = [](auto x, auto y) { return x / y; };//--->C++14
+auto mod = [](auto x, auto y) { return fmod(x, y); };//--->C++14
 auto expn = [](auto x, auto n) { return pow(x, n); };//--->C++14
 
 string Evaluator::convertToPostfix(string expre) {
 	string resultExp = "";
 	stack<char> operators;
 	vector<char> result;
-	int prec= 0;
+	int prec = 0;
 	int precStack = 0;
 
 	for (int x = 0; x < expre.length(); x++) {
@@ -47,12 +47,13 @@ string Evaluator::convertToPostfix(string expre) {
 			}
 			else {
 				//Para determinar precedencia de operador en pila
-				if (operators.top() == '(' || operators.top() ==')') {
+				if (operators.top() == '(' || operators.top() == ')') {
 					precStack = 4;
 				}
 				else if (operators.top() == '^') {
 					precStack = 3;
-				}else if (operators.top() == '*' || operators.top() == '/' || operators.top() == '%') {
+				}
+				else if (operators.top() == '*' || operators.top() == '/' || operators.top() == '%') {
 					precStack = 2;
 				}
 				else if (operators.top() == '+' || operators.top() == '-') {
@@ -63,7 +64,7 @@ string Evaluator::convertToPostfix(string expre) {
 				if (expre.at(x) == '(' || expre.at(x) == ')') {
 					prec = 4;
 				}
-				else if (expre.at(x)== '^') {
+				else if (expre.at(x) == '^') {
 					prec = 3;
 				}
 				else if (expre.at(x) == '*' || expre.at(x) == '/' || expre.at(x) == '%') {
@@ -93,12 +94,11 @@ string Evaluator::convertToPostfix(string expre) {
 			}
 		}
 		else {
-			
 			result.push_back(expre.at(x));
-			if (x + 1 <= expre.length() - 1 && !isdigit(expre.at(x + 1)) && expre.at(x + 1) != '.') // If next char is not end of expression, isn't a digit and isn't decimal point then concat ',' 
+			if (x + 1 <= expre.length() - 1 && !isdigit(expre.at(x + 1)) && expre.at(x + 1) != '.') // Si el siguiente char no es final de expresión, ó digito o punto decimal entonces concatenar ',' para dividir 
 			{
 				result.push_back(',');
-			
+
 			}
 		}
 	}
@@ -109,10 +109,76 @@ string Evaluator::convertToPostfix(string expre) {
 	}
 
 	for (int x = 0; x < result.size(); x++) {
-	    resultExp+=result.at(x);
+		resultExp += result.at(x);
 	}
 	result.shrink_to_fit();//-->C++11
 	return resultExp;
+}
+
+string Evaluator::PostfixToResult(string expre) {
+	stack<double> operands;
+	vector<string> expression;
+	string concat = "";//--> Para factorizar los numeros para poder hacer las operaciones y evaluar
+	string result = "";
+	double num1 = 0;
+	double num2 = 0;
+	double resultOpe = 0;//-->Float para almacenar resultado de operación y luego push a pila
+	for (int x = 0; x < expre.length(); x++) {
+		if (expre.at(x) == ',') {
+			if (concat != "") {
+				expression.push_back(concat);
+				concat = "";
+			}
+		}
+		else {
+			if (expre.at(x) != ',') {
+				concat += expre.at(x);
+			}
+		}
+	}
+	if (concat != "") {
+		expression.push_back(concat);
+		concat = "";
+	}
+
+	for (int x = 0; x < expression.size(); x++) {
+		if (expression.at(x) != "+" && expression.at(x) != "-" && expression.at(x) != "*" && expression.at(x) != "/" && expression.at(x) != "^" && expression.at(x) != "%") {
+			operands.push(stod(expression.at(x)));
+		}
+		else {
+			num2 = operands.top();
+			operands.pop();
+			num1 = operands.top();
+			operands.pop();
+
+			if (expression.at(x) == "+") {
+				resultOpe = sum(num1, num2);
+			}
+			else if (expression.at(x) == "-") {
+				resultOpe = sub(num1, num2);
+			}
+			else if (expression.at(x) == "/") {
+				resultOpe = divi(num1, num2);
+			}
+			else if (expression.at(x) == "%") {
+				resultOpe = mod(num1, num2);
+			}
+			else if (expression.at(x) == "*") {
+				resultOpe = mult(num1, num2);
+			}
+			else if (expression.at(x) == "*") {
+				resultOpe = expn(num1, num2);
+			}
+
+			operands.push(resultOpe);
+
+		}
+	}
+	double re = operands.top();
+
+	cout << re << endl;
+
+	return expre;
 }
 
 Evaluator::~Evaluator() {

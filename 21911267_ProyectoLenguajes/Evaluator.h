@@ -11,6 +11,7 @@ public:
 	Evaluator();
 	~Evaluator();
 	string convertToPostfix(string);
+	string PostfixToResult(string);
 };
 
 
