@@ -20,6 +20,7 @@ auto mod = [](auto x, auto y) { return x % y; };//--->C++14
 auto expn = [](auto x, auto n) { return pow(x, n); };//--->C++14
 
 string Evaluator::convertToPostfix(string expre) {
+	string resultExp = "";
 	stack<char> operators;
 	vector<char> result;
 	int prec= 0;
@@ -39,6 +40,7 @@ string Evaluator::convertToPostfix(string expre) {
 			else if (expre.at(x) == ')') {
 				while (operators.top() != '(') {
 					result.push_back(operators.top());
+					result.push_back(',');
 					operators.pop();
 				}
 				operators.pop();
@@ -73,14 +75,17 @@ string Evaluator::convertToPostfix(string expre) {
 
 				if (prec == precStack) {
 					result.push_back(operators.top());
+					result.push_back(',');
 					operators.pop();
 					operators.push(expre.at(x));
 				}
 				else if (prec > precStack) {
 					operators.push(expre.at(x));
+					result.push_back(',');
 				}
 				else if (prec < precStack) {
 					result.push_back(operators.top());
+					result.push_back(',');
 					operators.pop();
 					operators.push(expre.at(x));
 				}
@@ -88,25 +93,28 @@ string Evaluator::convertToPostfix(string expre) {
 			}
 		}
 		else {
+			
 			result.push_back(expre.at(x));
+			if (x + 1 <= expre.length() - 1 && !isdigit(expre.at(x + 1)) && expre.at(x + 1) != '.') // If next char is not end of expression, isn't a digit and isn't decimal point then concat ',' 
+			{
+				result.push_back(',');
+			
+			}
 		}
 	}
 	while (!operators.empty()) {
+		result.push_back(',');
 		result.push_back(operators.top());
 		operators.pop();
 	}
 
 	for (int x = 0; x < result.size(); x++) {
-		cout << result.at(x) << ", ";
+	    resultExp+=result.at(x);
 	}
-
-	return expre;
+	result.shrink_to_fit();//-->C++11
+	return resultExp;
 }
 
 Evaluator::~Evaluator() {
 
 }
-//Toma el primer de una lista
-/*std::vector<int> v = {3, 1, 4};
-auto vi = std::begin(v);
-std::cout << *vi << '\n';*/

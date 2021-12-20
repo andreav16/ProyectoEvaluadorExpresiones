@@ -53,7 +53,7 @@ int main() {
 			goto a;
 		}
 		expression = val.finalExpression(expression);
-		evaluador.convertToPostfix(expression);
+		cout << evaluador.convertToPostfix(expression);
 
 	} while (expression != "exit");
 
