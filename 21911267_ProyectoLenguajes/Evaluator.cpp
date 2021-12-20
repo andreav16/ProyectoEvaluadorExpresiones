@@ -149,7 +149,7 @@ string Evaluator::PostfixToResult(string expre) noexcept(false){
 				d += expression.at(x).at(w);
 				w++;
 			}		
-			operands.push(atof(d.c_str()));
+			operands.push(stof(d.c_str()));
 			d = "";
 			w = 0;		
 			
