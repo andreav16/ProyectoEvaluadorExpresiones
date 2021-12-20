@@ -1,12 +1,10 @@
 #include "Evaluator.h"
 #include <iostream>
 #include <string>
-#include <string.h>
 #include <vector>
 #include <stack>
 #include <iomanip>
 #include <sstream>
-
 using namespace std;
 
 Evaluator::Evaluator() {
@@ -116,13 +114,15 @@ string Evaluator::convertToPostfix(string expre) {
 }
 
 string Evaluator::PostfixToResult(string expre) {
-	stack<double> operands;
+	stack<float> operands;
 	vector<string> expression;
 	string concat = "";//--> Para factorizar los numeros para poder hacer las operaciones y evaluar
 	string result = "";
-	double num1 = 0;
-	double num2 = 0;
-	double resultOpe = 0;//-->Float para almacenar resultado de operación y luego push a pila
+	float num1 = 0.00;
+	float num2 = 0.00;
+	float resultOpe = 0.00;//-->Float para almacenar resultado de operación y luego push a pila
+	float w = 0;//-->Counter para numero decimal
+	string d = "";//-->para ir concatenando para meter a pila de operandos
 	for (int x = 0; x < expre.length(); x++) {
 		if (expre.at(x) == ',') {
 			if (concat != "") {
@@ -143,7 +143,13 @@ string Evaluator::PostfixToResult(string expre) {
 
 	for (int x = 0; x < expression.size(); x++) {
 		if (expression.at(x) != "+" && expression.at(x) != "-" && expression.at(x) != "*" && expression.at(x) != "/" && expression.at(x) != "^" && expression.at(x) != "%") {
-			operands.push(stod(expression.at(x)));
+			while (expression.at(x).size() > w) {
+				d += expression.at(x).at(w);
+				w++;
+			}
+			operands.push(atof(d.c_str()));
+			d = "";
+			w = 0;
 		}
 		else {
 			num2 = operands.top();
@@ -170,13 +176,12 @@ string Evaluator::PostfixToResult(string expre) {
 				resultOpe = expn(num1, num2);
 			}
 
-			operands.push(resultOpe);
+		 operands.push(resultOpe);
 
 		}
 	}
-	double re = operands.top();
 
-	cout << re << endl;
+	cout << "Resultado:"<<operands.top()<< endl;
 
 	return expre;
 }
