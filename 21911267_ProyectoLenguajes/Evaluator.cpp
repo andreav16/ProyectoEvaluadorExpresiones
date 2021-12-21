@@ -7,6 +7,9 @@
 #include <iomanip>
 #include <sstream>
 #include <any>
+#include <math.h>
+
+
 using namespace std;
 
 Evaluator::Evaluator() {
@@ -18,6 +21,9 @@ auto mult = [](auto x, auto y) { return x * y; };//--->C++14
 auto divi = [](auto x, auto y) { return x / y; };//--->C++14
 auto mod = [](auto x, auto y) { return fmod(x, y); };//--->C++14
 auto expn = [](auto x, auto n) { return pow(x, n); };//--->C++14
+
+
+
 
 string Evaluator::convertToPostfix(string expre) {
 	string resultExp = "";
@@ -59,7 +65,8 @@ string Evaluator::convertToPostfix(string expre) {
 				else if (operators.top() == '+' || operators.top() == '-') {
 					precStack = 1;
 				}
-
+				
+				
 				//Para determinar precedencia de operador recorriendo
 				if (expre.at(x) == '(' || expre.at(x) == ')') {
 					prec = 4;
@@ -73,6 +80,7 @@ string Evaluator::convertToPostfix(string expre) {
 				else if (expre.at(x) == '+' || expre.at(x) == '-') {
 					prec = 1;
 				}
+				
 
 				if (prec == precStack) {
 					result.push_back(operators.top());
@@ -170,12 +178,12 @@ string Evaluator::PostfixToResult(string expre) noexcept(false){
 				resultOpe = divi(num1, num2);
 			}
 			else if (expression.at(x) == "%") {
-				resultOpe = mod(num1, num2);
+				resultOpe = mod(num1,num2);
 			}
 			else if (expression.at(x) == "*") {
 				resultOpe = mult(num1, num2);
 			}
-			else if (expression.at(x) == "*") {
+			else if (expression.at(x) == "^") {
 				resultOpe = expn(num1, num2);
 			}
 

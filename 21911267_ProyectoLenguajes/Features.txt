@@ -1,0 +1,17 @@
+Features C++11
+1-Variable auto -->Validations en finalExpression línea 185
+2-find -->Validations en checkInvalidDeno linea C++11
+3-nullptr -->Validations línea 195
+4-shrink_to_fit() -->Evaluador linea 122
+
+Features C++14
+1-basic_string<char> --> Validations linea 166
+2-variable string auto expression = ""s; -->Main
+3-auto lambda -->Evaluator
+4-constexp tipodato name(){} -->Evaluador
+
+Features C++17
+1-noexcept -->Validations en funciones bool
+2-variable any -->Validations linea 97
+3-switch -->Validations linea 105
+4-Función inline -->Validations linea 176
